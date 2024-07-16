@@ -15,6 +15,7 @@
 		"@storybook/react-webpack5": "^7.6.10",
 		"@storybook/test": "^7.6.10",
 		"@svgr/webpack": "^8.0.1",
+		"@types/babel__core": "^7.20.5",
 		"@types/react": "^18.2.0",
 		"@types/react-dom": "^18.2.1",
 		"@typescript-eslint/eslint-plugin": "^5.59.11",
@@ -77,14 +78,15 @@
 		]
 	},
 	"dependencies": {
-		"clsx": "^2.1.0",
+		"@babel/core": "^7.24.8",
+		"clsx": "^2.1.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
 	},
 	"lint-staged": {
-		"*.{css,scss}": "yarn stylelint:fix",
-		"*.{js,jsx,ts,tsx}": "yarn lint",
-		"*.{js,jsx,ts,tsx,json,css,scss,md}": "yarn format"
+		"*.{css,scss}": "npm run stylelint:fix",
+		"*.{js,jsx,ts,tsx}": "npm run lint",
+		"*.{js,jsx,ts,tsx,json,css,scss,md}": "npm run format"
 	},
 	"config": {
 		"commitizen": {

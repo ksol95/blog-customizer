@@ -22,7 +22,8 @@ export const useOutsideClickClose = ({
 			}
 		};
 
-		window.addEventListener('click', handleClick);
+		//Баг, без проверки isOpen событие клика слушалось постоянно
+		isOpen && window.addEventListener('click', handleClick);
 
 		return () => {
 			window.removeEventListener('click', handleClick);
