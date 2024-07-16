@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
@@ -17,20 +17,27 @@ import {
 	fontSizeOptions,
 	OptionType,
 } from 'src/constants/articleProps';
+import { useClickOutsideForm } from './hooks/useClickOutside';
 
 type ArticleParamsProps = {
 	updateSettings: (formInputs: ArticleStateType) => void;
-	settings: ArticleStateType;
+	currentSettings: ArticleStateType;
 };
+
 export const ArticleParamsForm = (props: ArticleParamsProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const handleArrowClick = () => setIsOpen(!isOpen);
+	const [blogSettings, setBlogSettings] = useState(props.currentSettings);
+	const refRootParamForm = useRef<HTMLDivElement | null>(null);
 
-	const handleInputChange = (optionItem: string) => {
-		return (value: OptionType) => {
-			props.updateSettings({
-				...props.settings,
-				[optionItem]: value,
+	const handleClick = () => {
+		setIsOpen(!isOpen);
+	};
+
+	const handleInputChange = (optionKey: string) => {
+		return (optionValue: OptionType) => {
+			setBlogSettings({
+				...props.currentSettings,
+				[optionKey]: optionValue,
 			});
 		};
 	};
@@ -42,12 +49,18 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 	const handleSubmitForm = (e: SyntheticEvent) => {
 		e.preventDefault();
 		setIsOpen(false);
-		props.updateSettings(props.settings);
+		props.updateSettings(blogSettings);
 	};
 
+	useClickOutsideForm({
+		isOpen,
+		rootRef: refRootParamForm,
+		onClick: () => handleClick(),
+	});
+
 	return (
-		<>
-			<ArrowButton onClick={handleArrowClick} formState={isOpen} />
+		<div ref={refRootParamForm}>
+			<ArrowButton onClick={handleClick} formState={isOpen} />
 			<aside
 				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
 				<form className={styles.form} onSubmit={handleSubmitForm}>
@@ -56,33 +69,33 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 					</Text>
 					<Select
 						options={fontFamilyOptions}
-						selected={props.settings.fontFamilyOption}
+						selected={blogSettings.fontFamilyOption}
 						onChange={handleInputChange('fontFamilyOption')}
 						title={'Шрифт'}
 					/>
 					<RadioGroup
 						name={'fontSize'}
 						options={fontSizeOptions}
-						selected={props.settings.fontSizeOption}
+						selected={blogSettings.fontSizeOption}
 						onChange={handleInputChange('fontSizeOption')}
 						title={'Размер шрифта'}
 					/>
 					<Select
 						options={fontColors}
-						selected={props.settings.fontColor}
+						selected={blogSettings.fontColor}
 						onChange={handleInputChange('fontColor')}
 						title={'Цвет шрифта'}
 					/>
 					<Separator />
 					<Select
 						options={backgroundColors}
-						selected={props.settings.backgroundColor}
+						selected={blogSettings.backgroundColor}
 						onChange={handleInputChange('backgroundColor')}
 						title={'Цвет фона'}
 					/>
 					<Select
 						options={contentWidthArr}
-						selected={props.settings.contentWidth}
+						selected={blogSettings.contentWidth}
 						onChange={handleInputChange('contentWidth')}
 						title={'Ширина контента'}
 					/>
@@ -92,6 +105,6 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 					</div>
 				</form>
 			</aside>
-		</>
+		</div>
 	);
 };

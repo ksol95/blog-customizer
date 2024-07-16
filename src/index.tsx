@@ -18,8 +18,9 @@ const root = createRoot(domNode);
 const App = () => {
 	const [blogSettings, setBlogSettings] = useState(defaultArticleState);
 	const updateSettings = (value: ArticleStateType) => setBlogSettings(value);
+
 	return (
-		<div
+		<main
 			className={clsx(styles.main)}
 			style={
 				{
@@ -31,11 +32,11 @@ const App = () => {
 				} as CSSProperties
 			}>
 			<ArticleParamsForm
-				settings={blogSettings}
+				currentSettings={blogSettings}
 				updateSettings={updateSettings}
 			/>
 			<Article />
-		</div>
+		</main>
 	);
 };
 

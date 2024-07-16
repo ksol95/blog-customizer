@@ -46,6 +46,10 @@ export const Select = (props: SelectProps) => {
 		setIsOpen((isOpen) => !isOpen);
 	};
 
+	// useEffect(() => {
+	// 	isOpen && console.log('effect');
+	// }, [isOpen]);
+
 	return (
 		<div className={styles.container}>
 			{title && (
