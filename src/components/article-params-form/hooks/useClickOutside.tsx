@@ -11,13 +11,10 @@ const itOutside = (element: Node, root: HTMLDivElement) => {
 		let parent = element.parentElement;
 		while (parent !== null) {
 			parent = parent.parentElement;
-			if (parent == document.body) {
-				parent = null;
-				return true;
-			}
+			if (parent == document.body) return true;
 		}
 	}
-	return false;
+	return parent === null ? true : false;
 };
 
 export const useClickOutsideForm = ({
@@ -30,9 +27,7 @@ export const useClickOutsideForm = ({
 			const { target } = event;
 			const root = rootRef.current;
 			const outside = itOutside(target as Node, root as HTMLDivElement);
-			if (target instanceof Node && outside) {
-				onClick?.();
-			}
+			if (target instanceof Node && outside) onClick?.();
 		};
 
 		//Слушаем событие только при открытой форме
