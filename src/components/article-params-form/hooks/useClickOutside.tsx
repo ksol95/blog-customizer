@@ -6,6 +6,20 @@ type UseClickOutside = {
 	onClick: () => void;
 };
 
+const itOutside = (element: Node, root: HTMLDivElement) => {
+	if (!root.contains(element)) {
+		let parent = element.parentElement;
+		while (parent !== null) {
+			parent = parent.parentElement;
+			if (parent == document.body) {
+				parent = null;
+				return true;
+			}
+		}
+	}
+	return false;
+};
+
 export const useClickOutsideForm = ({
 	isOpen,
 	rootRef,
@@ -15,9 +29,9 @@ export const useClickOutsideForm = ({
 		const handleClick = (event: MouseEvent) => {
 			const { target } = event;
 			const root = rootRef.current;
-			if (target instanceof Node && !root?.contains(target)) {
-				//target.parentElement?.parentElement что бы не работало на вновь отрисованых элементах
-				target.parentElement?.parentElement && isOpen && onClick?.();
+			const outside = itOutside(target as Node, root as HTMLDivElement);
+			if (target instanceof Node && outside) {
+				onClick?.();
 			}
 		};
 
