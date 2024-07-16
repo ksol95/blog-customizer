@@ -18,6 +18,7 @@ import {
 	OptionType,
 } from 'src/constants/articleProps';
 import { useClickOutsideForm } from './hooks/useClickOutside';
+import { useKeyDownListener } from './hooks/useKeyDownListener';
 
 type ArticleParamsProps = {
 	updateSettings: (formInputs: ArticleStateType) => void;
@@ -28,9 +29,7 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 	const [blogSettings, setBlogSettings] = useState(defaultArticleState);
 	const refRootParamForm = useRef<HTMLDivElement | null>(null);
 
-	const handleClick = () => {
-		setIsOpen(!isOpen);
-	};
+	const handleClick = () => setIsOpen(!isOpen);
 
 	const handleInputChange = (optionKey: string) => {
 		return (optionValue: OptionType) => {
@@ -56,6 +55,12 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 		isOpen,
 		rootRef: refRootParamForm,
 		onClick: () => handleClick(),
+	});
+
+	useKeyDownListener({
+		key: 'Escape',
+		flag: isOpen,
+		callBack: () => setIsOpen(false),
 	});
 
 	return (
