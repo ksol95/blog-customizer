@@ -59,7 +59,8 @@ export const Select = (props: SelectProps) => {
 				className={styles.selectWrapper}
 				ref={rootRef}
 				data-is-active={isOpen}
-				data-testid='selectWrapper'>
+				data-testid='selectWrapper'
+				onClick={handlePlaceHolderClick}>
 				<img
 					src={arrowDown}
 					alt='иконка стрелочки'
@@ -72,7 +73,6 @@ export const Select = (props: SelectProps) => {
 					)}
 					data-status={status}
 					data-selected={!!selected?.value}
-					onClick={handlePlaceHolderClick}
 					role='button'
 					tabIndex={0}
 					ref={placeholderRef}>
