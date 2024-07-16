@@ -35,8 +35,9 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 
 	const handleInputChange = (optionKey: string) => {
 		return (optionValue: OptionType) => {
+			console.log('chnge');
 			setBlogSettings({
-				...props.currentSettings,
+				...blogSettings,
 				[optionKey]: optionValue,
 			});
 		};
