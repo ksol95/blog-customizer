@@ -21,12 +21,11 @@ import { useClickOutsideForm } from './hooks/useClickOutside';
 
 type ArticleParamsProps = {
 	updateSettings: (formInputs: ArticleStateType) => void;
-	currentSettings: ArticleStateType;
 };
 
 export const ArticleParamsForm = (props: ArticleParamsProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [blogSettings, setBlogSettings] = useState(props.currentSettings);
+	const [blogSettings, setBlogSettings] = useState(defaultArticleState);
 	const refRootParamForm = useRef<HTMLDivElement | null>(null);
 
 	const handleClick = () => {
@@ -35,7 +34,6 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 
 	const handleInputChange = (optionKey: string) => {
 		return (optionValue: OptionType) => {
-			console.log('chnge');
 			setBlogSettings({
 				...blogSettings,
 				[optionKey]: optionValue,

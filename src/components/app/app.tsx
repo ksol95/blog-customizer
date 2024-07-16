@@ -26,10 +26,7 @@ export const App = () => {
 					'--bg-color': blogSettings.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm
-				currentSettings={blogSettings}
-				updateSettings={updateSettings}
-			/>
+			<ArticleParamsForm updateSettings={updateSettings} />
 			<Article />
 		</main>
 	);
