@@ -13,11 +13,11 @@ type Story = StoryObj<typeof ArrowButton>;
 
 const ArrowButtonToggle = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const handleArrowClick = () => setIsOpen(!isOpen);
+	const handleClick = () => setIsOpen(!isOpen);
 
 	return (
 		<>
-			<ArrowButton onClick={handleArrowClick} formState={isOpen} />
+			<ArrowButton formState={{ isOpen, handleClick }} />
 		</>
 	);
 };

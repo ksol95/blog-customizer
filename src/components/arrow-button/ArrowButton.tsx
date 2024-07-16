@@ -6,11 +6,14 @@ import clsx from 'clsx';
 /** Функция для обработки открытия/закрытия формы */
 export type OnClick = () => void;
 interface arrowButtonProps {
-	onClick: OnClick;
-	formState: boolean;
+	formState: {
+		handleClick: OnClick;
+		isOpen: boolean;
+	};
 }
 
 export const ArrowButton = (props: arrowButtonProps) => {
+	const { isOpen, handleClick } = props.formState;
 	return (
 		/* Не забываем указаывать role и aria-label атрибуты для интерактивных элементов */
 		<div
@@ -18,13 +21,13 @@ export const ArrowButton = (props: arrowButtonProps) => {
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
 			className={clsx(styles.container, {
-				[styles.container_open]: props.formState,
+				[styles.container_open]: isOpen,
 			})}
-			onClick={props.onClick}>
+			onClick={handleClick}>
 			<img
 				src={arrow}
 				alt='иконка стрелочки'
-				className={clsx(styles.arrow, { [styles.arrow_open]: props.formState })}
+				className={clsx(styles.arrow, { [styles.arrow_open]: isOpen })}
 			/>
 		</div>
 	);
