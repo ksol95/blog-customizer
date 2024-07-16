@@ -42,6 +42,7 @@ export const ArticleParamsForm = (props: ArticleParamsProps) => {
 	};
 
 	const handleResetButton = () => {
+		setBlogSettings(defaultArticleState);
 		props.updateSettings(defaultArticleState);
 	};
 
